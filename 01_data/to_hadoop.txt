@@ -1,0 +1,21 @@
+scp AFINN-111.txt stefanpapp@hdppapptest-ssh.azurehdinsight.net:/home/stefanpapp
+scp -P 2222 AFINN-111.txt root@localhost:/home/root
+
+hdfs dfs –ls /
+hadoop fs -mkdir -p /data/sentiment
+
+hadoop fs -put AFINN-111.txt /data/sentiment
+
+
+hive -e "CREATE TABLE sentiment_dict
+(
+	sentiment string,
+	rating int
+	
+) 
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE
+LOCATION '/data/sentiment'"
+
+
+scp AFINN-111.txt <username>@<hdinsightname>-ssh.azurehdinsight.net:/home/<username>
